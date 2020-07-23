@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" name="DataClasses1">
+  <DataContextMoniker Name="/DataClasses1DataContext" />
+  <nestedChildShapes>
+    <classShape Id="f6b5107f-2cde-4348-bc68-606cafabd455" absoluteBounds="5.75, 1.625, 2, 2.1554996744791666">
+      <DataClassMoniker Name="/DataClasses1DataContext/Registro" />
+      <nestedChildShapes>
+        <elementListCompartment Id="17bf5585-1f9f-4c9b-bd96-68f7e01189cc" absoluteBounds="5.765, 2.085, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="869eea16-8a7a-4010-aca5-b2729b5fab31" absoluteBounds="2.125, 1.5, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/DataClasses1DataContext/UsuarioLogin" />
+      <nestedChildShapes>
+        <elementListCompartment Id="24789fa3-eecc-4ce8-938b-bbe6bc989b27" absoluteBounds="2.14, 1.96, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(4.125 : 2.35179768880208); (5.75 : 2.35179768880208)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/DataClasses1DataContext/UsuarioLogin/UsuarioLogin_Registro" />
+      <nodes>
+        <classShapeMoniker Id="869eea16-8a7a-4010-aca5-b2729b5fab31" />
+        <classShapeMoniker Id="f6b5107f-2cde-4348-bc68-606cafabd455" />
+      </nodes>
+    </associationConnector>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>
