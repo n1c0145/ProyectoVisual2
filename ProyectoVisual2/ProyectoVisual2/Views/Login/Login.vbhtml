@@ -17,11 +17,7 @@ End Code
             @Html.PasswordFor(Function(model) model.contrasenia, New With {.class = "form-control"})
             @Html.ValidationMessageFor(Function(model) model.contrasenia)
         </div>
-        @<div class="form-group">
-            @Html.LabelFor(Function(model) model.tipousuario)
-            @Html.TextBoxFor(Function(model) model.tipousuario, New With {.class = "form-control"})
-            @Html.ValidationMessageFor(Function(model) model.tipousuario)
-        </div>
+
         @<input type="submit" value="Ingreso" class="btn btn-block btn-danger" />
     End Using
 

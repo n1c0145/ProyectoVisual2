@@ -2,7 +2,6 @@
 
 Imports System.ComponentModel.DataAnnotations
 Public Class Login
-
     Public Property idLogin As String
     <Required(ErrorMessage:="Este campo es requerido")>
     <Display(Name:="Usuario")>
@@ -14,18 +13,41 @@ Public Class Login
     <Display(Name:="Contraseña")>
     Public Property tipousuario As String
     <Display(Name:="Tipo de Usuario")>
-    Dim tabla1 As New DataClasses1DataContext
-    Dim log_1 As New UsuarioLogin
-    Public Function crearRegistroLog()
+    Dim tabla As New DataClasses1DataContext
+    Dim log As New UsuarioLogin
+    Public Function entradaLogin()
 
-        log_1.IdLogin = idLogin
-        log_1.usuario = usuario
-        log_1.contrasenia = contrasenia
-        log_1.tipousuario = tipousuario
+        Dim consulta = From a In tabla.UsuarioLogin Where a.usuario = usuario
+        Dim consulta2 = From b In tabla.UsuarioLogin Where b.contrasenia = contrasenia
 
-        tabla1.UsuarioLogin.InsertOnSubmit(log_1)
-        tabla1.SubmitChanges()
-        Return True
+
+        If consulta.Count() > 0 Then
+            If consulta2.Count() > 0 Then
+                Return True
+            End If
+            Return False
+        End If
+        Return False
+
+
+    End Function
+
+    Public Function listarLogins()
+
+        Dim lista As List(Of Login) = New List(Of Login)
+        Dim consulta = From a In tabla.UsuarioLogin Where a.usuario = usuario
+        Dim listaregistro = consulta.ToList()
+        For Each registro In listaregistro
+            lista.Add(New Login With {
+            .idLogin = registro.IdLogin,
+            .usuario = registro.usuario,
+            .contrasenia = registro.contrasenia,
+            .tipousuario = registro.tipousuario
+            })
+        Next
+        Return lista
+
+
     End Function
 
 End Class

@@ -233,6 +233,7 @@
     <Content Include="Views\Inicio\Index.vbhtml" />
     <Content Include="Views\Usuario\InicioUsuario.vbhtml" />
     <Content Include="Views\Administrador\InicioAdministrador.vbhtml" />
+    <Content Include="Views\Administrador\ListaUsuarios.vbhtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="favicon.ico" />
