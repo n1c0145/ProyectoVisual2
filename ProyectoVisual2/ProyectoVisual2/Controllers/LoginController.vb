@@ -28,14 +28,20 @@ Namespace Controllers
 
         <HttpPost>
         <AllowAnonymous>
-        Public Async Function Login(datos As Login) As Task(Of ActionResult)
+        Public Function Login(datos As Login) As ActionResult
+
+
+
+
             If datos.entradaLogin() Then
                 Return RedirectToAction("InicioAdministrador", "Administrador", New With {.id = 1})
 
             End If
         End Function
 
+
         Function Info() As ViewResult
+            Return View()
         End Function
 
     End Class

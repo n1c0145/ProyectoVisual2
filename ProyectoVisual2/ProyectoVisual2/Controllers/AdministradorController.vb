@@ -9,14 +9,18 @@ Namespace Controllers
             Return View()
         End Function
 
-        Function InformacionUsuario(id As Integer) As ViewResult
-
-            Dim instantaciaLogin = New Login()
-            Dim loginEncotrado = listaLogin(id)
-            Return View(instantaciaLogin.listarLogins)
+        Function ListaUsuarios() As ActionResult
+            Return View()
         End Function
 
-        Function ListaUsuarios() As ActionResult
+        Function Producto() As ActionResult
+            Return View()
+        End Function
+
+        Function Inventario() As ActionResult
+            Return View()
+        End Function
+        Function Proveedor() As ActionResult
             Return View()
         End Function
 

@@ -31,17 +31,23 @@ Partial Public Class DataClasses1DataContext
   #Region "Definiciones de métodos de extensibilidad"
   Partial Private Sub OnCreated()
   End Sub
-  Partial Private Sub InsertRegistro(instance As Registro)
-    End Sub
-  Partial Private Sub UpdateRegistro(instance As Registro)
-    End Sub
-  Partial Private Sub DeleteRegistro(instance As Registro)
-    End Sub
   Partial Private Sub InsertUsuarioLogin(instance As UsuarioLogin)
     End Sub
   Partial Private Sub UpdateUsuarioLogin(instance As UsuarioLogin)
     End Sub
   Partial Private Sub DeleteUsuarioLogin(instance As UsuarioLogin)
+    End Sub
+  Partial Private Sub InserttipoUsuario(instance As tipoUsuario)
+    End Sub
+  Partial Private Sub UpdatetipoUsuario(instance As tipoUsuario)
+    End Sub
+  Partial Private Sub DeletetipoUsuario(instance As tipoUsuario)
+    End Sub
+  Partial Private Sub InsertRegistro(instance As Registro)
+    End Sub
+  Partial Private Sub UpdateRegistro(instance As Registro)
+    End Sub
+  Partial Private Sub DeleteRegistro(instance As Registro)
     End Sub
   #End Region
 	
@@ -70,17 +76,315 @@ Partial Public Class DataClasses1DataContext
 		OnCreated
 	End Sub
 	
-	Public ReadOnly Property Registro() As System.Data.Linq.Table(Of Registro)
-		Get
-			Return Me.GetTable(Of Registro)
-		End Get
-	End Property
-	
 	Public ReadOnly Property UsuarioLogin() As System.Data.Linq.Table(Of UsuarioLogin)
 		Get
 			Return Me.GetTable(Of UsuarioLogin)
 		End Get
 	End Property
+	
+	Public ReadOnly Property tipoUsuario() As System.Data.Linq.Table(Of tipoUsuario)
+		Get
+			Return Me.GetTable(Of tipoUsuario)
+		End Get
+	End Property
+	
+	Public ReadOnly Property Registro() As System.Data.Linq.Table(Of Registro)
+		Get
+			Return Me.GetTable(Of Registro)
+		End Get
+	End Property
+End Class
+
+<Global.System.Data.Linq.Mapping.TableAttribute(Name:="dbo.UsuarioLogin")>  _
+Partial Public Class UsuarioLogin
+	Implements System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
+	
+	Private Shared emptyChangingEventArgs As PropertyChangingEventArgs = New PropertyChangingEventArgs(String.Empty)
+	
+	Private _IdLogin As Integer
+	
+	Private _usuario As String
+	
+	Private _contrasenia As String
+	
+	Private _IdTipoUsuario As System.Nullable(Of Integer)
+	
+	Private _Registro As EntitySet(Of Registro)
+	
+	Private _tipoUsuario As EntityRef(Of tipoUsuario)
+	
+    #Region "Definiciones de métodos de extensibilidad"
+    Partial Private Sub OnLoaded()
+    End Sub
+    Partial Private Sub OnValidate(action As System.Data.Linq.ChangeAction)
+    End Sub
+    Partial Private Sub OnCreated()
+    End Sub
+    Partial Private Sub OnIdLoginChanging(value As Integer)
+    End Sub
+    Partial Private Sub OnIdLoginChanged()
+    End Sub
+    Partial Private Sub OnusuarioChanging(value As String)
+    End Sub
+    Partial Private Sub OnusuarioChanged()
+    End Sub
+    Partial Private Sub OncontraseniaChanging(value As String)
+    End Sub
+    Partial Private Sub OncontraseniaChanged()
+    End Sub
+    Partial Private Sub OnIdTipoUsuarioChanging(value As System.Nullable(Of Integer))
+    End Sub
+    Partial Private Sub OnIdTipoUsuarioChanged()
+    End Sub
+    #End Region
+	
+	Public Sub New()
+		MyBase.New
+		Me._Registro = New EntitySet(Of Registro)(AddressOf Me.attach_Registro, AddressOf Me.detach_Registro)
+		Me._tipoUsuario = CType(Nothing, EntityRef(Of tipoUsuario))
+		OnCreated
+	End Sub
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_IdLogin", AutoSync:=AutoSync.OnInsert, DbType:="Int NOT NULL IDENTITY", IsPrimaryKey:=true, IsDbGenerated:=true)>  _
+	Public Property IdLogin() As Integer
+		Get
+			Return Me._IdLogin
+		End Get
+		Set
+			If ((Me._IdLogin = value)  _
+						= false) Then
+				Me.OnIdLoginChanging(value)
+				Me.SendPropertyChanging
+				Me._IdLogin = value
+				Me.SendPropertyChanged("IdLogin")
+				Me.OnIdLoginChanged
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_usuario", DbType:="VarChar(255)")>  _
+	Public Property usuario() As String
+		Get
+			Return Me._usuario
+		End Get
+		Set
+			If (String.Equals(Me._usuario, value) = false) Then
+				Me.OnusuarioChanging(value)
+				Me.SendPropertyChanging
+				Me._usuario = value
+				Me.SendPropertyChanged("usuario")
+				Me.OnusuarioChanged
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_contrasenia", DbType:="VarChar(255)")>  _
+	Public Property contrasenia() As String
+		Get
+			Return Me._contrasenia
+		End Get
+		Set
+			If (String.Equals(Me._contrasenia, value) = false) Then
+				Me.OncontraseniaChanging(value)
+				Me.SendPropertyChanging
+				Me._contrasenia = value
+				Me.SendPropertyChanged("contrasenia")
+				Me.OncontraseniaChanged
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_IdTipoUsuario", DbType:="Int")>  _
+	Public Property IdTipoUsuario() As System.Nullable(Of Integer)
+		Get
+			Return Me._IdTipoUsuario
+		End Get
+		Set
+			If (Me._IdTipoUsuario.Equals(value) = false) Then
+				If Me._tipoUsuario.HasLoadedOrAssignedValue Then
+					Throw New System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException()
+				End If
+				Me.OnIdTipoUsuarioChanging(value)
+				Me.SendPropertyChanging
+				Me._IdTipoUsuario = value
+				Me.SendPropertyChanged("IdTipoUsuario")
+				Me.OnIdTipoUsuarioChanged
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.AssociationAttribute(Name:="UsuarioLogin_Registro", Storage:="_Registro", ThisKey:="IdLogin", OtherKey:="IdLogin")>  _
+	Public Property Registro() As EntitySet(Of Registro)
+		Get
+			Return Me._Registro
+		End Get
+		Set
+			Me._Registro.Assign(value)
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.AssociationAttribute(Name:="tipoUsuario_UsuarioLogin", Storage:="_tipoUsuario", ThisKey:="IdTipoUsuario", OtherKey:="IdTipoUsuario", IsForeignKey:=true)>  _
+	Public Property tipoUsuario() As tipoUsuario
+		Get
+			Return Me._tipoUsuario.Entity
+		End Get
+		Set
+			Dim previousValue As tipoUsuario = Me._tipoUsuario.Entity
+			If ((Object.Equals(previousValue, value) = false)  _
+						OrElse (Me._tipoUsuario.HasLoadedOrAssignedValue = false)) Then
+				Me.SendPropertyChanging
+				If ((previousValue Is Nothing)  _
+							= false) Then
+					Me._tipoUsuario.Entity = Nothing
+					previousValue.UsuarioLogin.Remove(Me)
+				End If
+				Me._tipoUsuario.Entity = value
+				If ((value Is Nothing)  _
+							= false) Then
+					value.UsuarioLogin.Add(Me)
+					Me._IdTipoUsuario = value.IdTipoUsuario
+				Else
+					Me._IdTipoUsuario = CType(Nothing, Nullable(Of Integer))
+				End If
+				Me.SendPropertyChanged("tipoUsuario")
+			End If
+		End Set
+	End Property
+	
+	Public Event PropertyChanging As PropertyChangingEventHandler Implements System.ComponentModel.INotifyPropertyChanging.PropertyChanging
+	
+	Public Event PropertyChanged As PropertyChangedEventHandler Implements System.ComponentModel.INotifyPropertyChanged.PropertyChanged
+	
+	Protected Overridable Sub SendPropertyChanging()
+		If ((Me.PropertyChangingEvent Is Nothing)  _
+					= false) Then
+			RaiseEvent PropertyChanging(Me, emptyChangingEventArgs)
+		End If
+	End Sub
+	
+	Protected Overridable Sub SendPropertyChanged(ByVal propertyName As [String])
+		If ((Me.PropertyChangedEvent Is Nothing)  _
+					= false) Then
+			RaiseEvent PropertyChanged(Me, New PropertyChangedEventArgs(propertyName))
+		End If
+	End Sub
+	
+	Private Sub attach_Registro(ByVal entity As Registro)
+		Me.SendPropertyChanging
+		entity.UsuarioLogin = Me
+	End Sub
+	
+	Private Sub detach_Registro(ByVal entity As Registro)
+		Me.SendPropertyChanging
+		entity.UsuarioLogin = Nothing
+	End Sub
+End Class
+
+<Global.System.Data.Linq.Mapping.TableAttribute(Name:="dbo.tipoUsuario")>  _
+Partial Public Class tipoUsuario
+	Implements System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
+	
+	Private Shared emptyChangingEventArgs As PropertyChangingEventArgs = New PropertyChangingEventArgs(String.Empty)
+	
+	Private _IdTipoUsuario As Integer
+	
+	Private _Tipo As String
+	
+	Private _UsuarioLogin As EntitySet(Of UsuarioLogin)
+	
+    #Region "Definiciones de métodos de extensibilidad"
+    Partial Private Sub OnLoaded()
+    End Sub
+    Partial Private Sub OnValidate(action As System.Data.Linq.ChangeAction)
+    End Sub
+    Partial Private Sub OnCreated()
+    End Sub
+    Partial Private Sub OnIdTipoUsuarioChanging(value As Integer)
+    End Sub
+    Partial Private Sub OnIdTipoUsuarioChanged()
+    End Sub
+    Partial Private Sub OnTipoChanging(value As String)
+    End Sub
+    Partial Private Sub OnTipoChanged()
+    End Sub
+    #End Region
+	
+	Public Sub New()
+		MyBase.New
+		Me._UsuarioLogin = New EntitySet(Of UsuarioLogin)(AddressOf Me.attach_UsuarioLogin, AddressOf Me.detach_UsuarioLogin)
+		OnCreated
+	End Sub
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_IdTipoUsuario", AutoSync:=AutoSync.OnInsert, DbType:="Int NOT NULL IDENTITY", IsPrimaryKey:=true, IsDbGenerated:=true)>  _
+	Public Property IdTipoUsuario() As Integer
+		Get
+			Return Me._IdTipoUsuario
+		End Get
+		Set
+			If ((Me._IdTipoUsuario = value)  _
+						= false) Then
+				Me.OnIdTipoUsuarioChanging(value)
+				Me.SendPropertyChanging
+				Me._IdTipoUsuario = value
+				Me.SendPropertyChanged("IdTipoUsuario")
+				Me.OnIdTipoUsuarioChanged
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_Tipo", DbType:="VarChar(255)")>  _
+	Public Property Tipo() As String
+		Get
+			Return Me._Tipo
+		End Get
+		Set
+			If (String.Equals(Me._Tipo, value) = false) Then
+				Me.OnTipoChanging(value)
+				Me.SendPropertyChanging
+				Me._Tipo = value
+				Me.SendPropertyChanged("Tipo")
+				Me.OnTipoChanged
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.AssociationAttribute(Name:="tipoUsuario_UsuarioLogin", Storage:="_UsuarioLogin", ThisKey:="IdTipoUsuario", OtherKey:="IdTipoUsuario")>  _
+	Public Property UsuarioLogin() As EntitySet(Of UsuarioLogin)
+		Get
+			Return Me._UsuarioLogin
+		End Get
+		Set
+			Me._UsuarioLogin.Assign(value)
+		End Set
+	End Property
+	
+	Public Event PropertyChanging As PropertyChangingEventHandler Implements System.ComponentModel.INotifyPropertyChanging.PropertyChanging
+	
+	Public Event PropertyChanged As PropertyChangedEventHandler Implements System.ComponentModel.INotifyPropertyChanged.PropertyChanged
+	
+	Protected Overridable Sub SendPropertyChanging()
+		If ((Me.PropertyChangingEvent Is Nothing)  _
+					= false) Then
+			RaiseEvent PropertyChanging(Me, emptyChangingEventArgs)
+		End If
+	End Sub
+	
+	Protected Overridable Sub SendPropertyChanged(ByVal propertyName As [String])
+		If ((Me.PropertyChangedEvent Is Nothing)  _
+					= false) Then
+			RaiseEvent PropertyChanged(Me, New PropertyChangedEventArgs(propertyName))
+		End If
+	End Sub
+	
+	Private Sub attach_UsuarioLogin(ByVal entity As UsuarioLogin)
+		Me.SendPropertyChanging
+		entity.tipoUsuario = Me
+	End Sub
+	
+	Private Sub detach_UsuarioLogin(ByVal entity As UsuarioLogin)
+		Me.SendPropertyChanging
+		entity.tipoUsuario = Nothing
+	End Sub
 End Class
 
 <Global.System.Data.Linq.Mapping.TableAttribute(Name:="dbo.Registro")>  _
@@ -308,156 +612,5 @@ Partial Public Class Registro
 					= false) Then
 			RaiseEvent PropertyChanged(Me, New PropertyChangedEventArgs(propertyName))
 		End If
-	End Sub
-End Class
-
-<Global.System.Data.Linq.Mapping.TableAttribute(Name:="dbo.UsuarioLogin")>  _
-Partial Public Class UsuarioLogin
-	Implements System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
-	
-	Private Shared emptyChangingEventArgs As PropertyChangingEventArgs = New PropertyChangingEventArgs(String.Empty)
-	
-	Private _IdLogin As Integer
-	
-	Private _usuario As String
-	
-	Private _contrasenia As String
-	
-	Private _tipousuario As String
-	
-	Private _Registro As EntitySet(Of Registro)
-	
-    #Region "Definiciones de métodos de extensibilidad"
-    Partial Private Sub OnLoaded()
-    End Sub
-    Partial Private Sub OnValidate(action As System.Data.Linq.ChangeAction)
-    End Sub
-    Partial Private Sub OnCreated()
-    End Sub
-    Partial Private Sub OnIdLoginChanging(value As Integer)
-    End Sub
-    Partial Private Sub OnIdLoginChanged()
-    End Sub
-    Partial Private Sub OnusuarioChanging(value As String)
-    End Sub
-    Partial Private Sub OnusuarioChanged()
-    End Sub
-    Partial Private Sub OncontraseniaChanging(value As String)
-    End Sub
-    Partial Private Sub OncontraseniaChanged()
-    End Sub
-    Partial Private Sub OntipousuarioChanging(value As String)
-    End Sub
-    Partial Private Sub OntipousuarioChanged()
-    End Sub
-    #End Region
-	
-	Public Sub New()
-		MyBase.New
-		Me._Registro = New EntitySet(Of Registro)(AddressOf Me.attach_Registro, AddressOf Me.detach_Registro)
-		OnCreated
-	End Sub
-	
-	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_IdLogin", AutoSync:=AutoSync.OnInsert, DbType:="Int NOT NULL IDENTITY", IsPrimaryKey:=true, IsDbGenerated:=true)>  _
-	Public Property IdLogin() As Integer
-		Get
-			Return Me._IdLogin
-		End Get
-		Set
-			If ((Me._IdLogin = value)  _
-						= false) Then
-				Me.OnIdLoginChanging(value)
-				Me.SendPropertyChanging
-				Me._IdLogin = value
-				Me.SendPropertyChanged("IdLogin")
-				Me.OnIdLoginChanged
-			End If
-		End Set
-	End Property
-	
-	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_usuario", DbType:="VarChar(255)")>  _
-	Public Property usuario() As String
-		Get
-			Return Me._usuario
-		End Get
-		Set
-			If (String.Equals(Me._usuario, value) = false) Then
-				Me.OnusuarioChanging(value)
-				Me.SendPropertyChanging
-				Me._usuario = value
-				Me.SendPropertyChanged("usuario")
-				Me.OnusuarioChanged
-			End If
-		End Set
-	End Property
-	
-	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_contrasenia", DbType:="VarChar(255)")>  _
-	Public Property contrasenia() As String
-		Get
-			Return Me._contrasenia
-		End Get
-		Set
-			If (String.Equals(Me._contrasenia, value) = false) Then
-				Me.OncontraseniaChanging(value)
-				Me.SendPropertyChanging
-				Me._contrasenia = value
-				Me.SendPropertyChanged("contrasenia")
-				Me.OncontraseniaChanged
-			End If
-		End Set
-	End Property
-	
-	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_tipousuario", DbType:="VarChar(255)")>  _
-	Public Property tipousuario() As String
-		Get
-			Return Me._tipousuario
-		End Get
-		Set
-			If (String.Equals(Me._tipousuario, value) = false) Then
-				Me.OntipousuarioChanging(value)
-				Me.SendPropertyChanging
-				Me._tipousuario = value
-				Me.SendPropertyChanged("tipousuario")
-				Me.OntipousuarioChanged
-			End If
-		End Set
-	End Property
-	
-	<Global.System.Data.Linq.Mapping.AssociationAttribute(Name:="UsuarioLogin_Registro", Storage:="_Registro", ThisKey:="IdLogin", OtherKey:="IdLogin")>  _
-	Public Property Registro() As EntitySet(Of Registro)
-		Get
-			Return Me._Registro
-		End Get
-		Set
-			Me._Registro.Assign(value)
-		End Set
-	End Property
-	
-	Public Event PropertyChanging As PropertyChangingEventHandler Implements System.ComponentModel.INotifyPropertyChanging.PropertyChanging
-	
-	Public Event PropertyChanged As PropertyChangedEventHandler Implements System.ComponentModel.INotifyPropertyChanged.PropertyChanged
-	
-	Protected Overridable Sub SendPropertyChanging()
-		If ((Me.PropertyChangingEvent Is Nothing)  _
-					= false) Then
-			RaiseEvent PropertyChanging(Me, emptyChangingEventArgs)
-		End If
-	End Sub
-	
-	Protected Overridable Sub SendPropertyChanged(ByVal propertyName As [String])
-		If ((Me.PropertyChangedEvent Is Nothing)  _
-					= false) Then
-			RaiseEvent PropertyChanged(Me, New PropertyChangedEventArgs(propertyName))
-		End If
-	End Sub
-	
-	Private Sub attach_Registro(ByVal entity As Registro)
-		Me.SendPropertyChanging
-		entity.UsuarioLogin = Me
-	End Sub
-	
-	Private Sub detach_Registro(ByVal entity As Registro)
-		Me.SendPropertyChanging
-		entity.UsuarioLogin = Nothing
 	End Sub
 End Class
