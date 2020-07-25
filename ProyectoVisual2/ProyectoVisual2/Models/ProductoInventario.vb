@@ -37,5 +37,54 @@ Public Class ProductoInventario
         End If
     End Function
 
+    Public Function listarProductos()
+        Dim listap As List(Of ProductoInventario) = New List(Of ProductoInventario)
+        Dim consulta = From variable In tabla.Producto
+        Dim listaProductos = consulta.ToList()
+
+        For Each registro In listaProductos
+            listap.Add(New ProductoInventario() With {
+             .idProducto = registro.IdProducto,
+            .nombre = registro.nombre,
+             .descripcion = registro.descripcion,
+             .precio = registro.precio,
+             .categoria = registro.categoria,
+             .stock = registro.stock})
+
+        Next
+        Return listap
+    End Function
+
+    Public Function editarProducto(idProducto As String)
+        Dim loginEncontrado As ProductoInventario
+        loginEncontrado = tabla.Producto.Where(Function(registro) registro.IdProducto = idProducto).[Select](Function(registro) New ProductoInventario() With {
+        .idProducto = registro.IdProducto,
+        .nombre = registro.nombre,
+        .descripcion = registro.descripcion,
+              .precio = registro.precio,
+        .categoria = registro.categoria,
+        .stock = registro.stock}).SingleOrDefault()
+        Return loginEncontrado
+    End Function
+
+    Public Function actualizarProducto(model As ProductoInventario)
+        Dim variable As Producto
+        variable = tabla.Producto.Where(Function(loginUser) loginUser.IdProducto = model.idProducto).Single()
+        variable.IdProducto = model.idProducto
+        variable.nombre = model.nombre
+        variable.descripcion = model.descripcion
+        variable.precio = model.precio
+        variable.categoria = model.categoria
+        variable.stock = model.stock
+        tabla.SubmitChanges()
+        Return True
+    End Function
+    Public Function EliminarProducto(datosFormulario As ProductoInventario) As Boolean
+        Dim registroEncontrado As Producto
+        registroEncontrado = tabla.Producto.Where(Function(registro) registro.IdProducto = datosFormulario.idProducto).Single()
+        tabla.Producto.DeleteOnSubmit(registroEncontrado)
+        tabla.SubmitChanges()
+        Return True
+    End Function
 
 End Class

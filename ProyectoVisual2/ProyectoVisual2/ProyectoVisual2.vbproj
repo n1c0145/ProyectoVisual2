@@ -249,12 +249,15 @@
     <Content Include="Views\Usuario\InicioUsuario.vbhtml" />
     <Content Include="Views\Administrador\InicioAdministrador.vbhtml" />
     <Content Include="Views\Administrador\ListaUsuarios.vbhtml" />
-    <Content Include="Views\Administrador\Inventario.vbhtml" />
     <Content Include="Views\Administrador\ListaProveedor.vbhtml" />
     <Content Include="Views\Administrador\EditarUsuario.vbhtml" />
-    <Content Include="Views\Administrador\ListaProducto.vbhtml" />
     <Content Include="Views\Administrador\InsertarProducto.vbhtml" />
     <Content Include="Views\Administrador\InsertarProveedor.vbhtml" />
+    <Content Include="Views\Administrador\ListaProducto.vbhtml" />
+    <Content Include="Views\Administrador\Inventario.vbhtml" />
+    <Content Include="Views\Administrador\EditarProveedor.vbhtml" />
+    <Content Include="Views\Administrador\EditarProducto.vbhtml" />
+    <Content Include="Views\Administrador\EditarInventario.vbhtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="favicon.ico" />

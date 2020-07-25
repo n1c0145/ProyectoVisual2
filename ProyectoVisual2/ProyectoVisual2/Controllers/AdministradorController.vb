@@ -68,17 +68,123 @@ Namespace Controllers
 
             End If
         End Function
-        Function Inventario() As ActionResult
+
+
+        Function InsertarProducto() As ActionResult
             Return View()
+        End Function
+        Function ListaProducto() As ActionResult
+            Dim instantaciaProducto = New ProductoInventario()
+
+            Return View(instantaciaProducto.listarProductos)
+        End Function
+
+        Function EditarProducto(idProducto As String) As ActionResult
+            Dim instantaciaProveedor = New ProductoInventario()
+
+            Return View(instantaciaProveedor.editarProducto(idProducto))
+        End Function
+
+        Function EditarInventario(idProducto As String) As ActionResult
+            Dim instantaciaProveedor = New ProductoInventario()
+
+            Return View(instantaciaProveedor.editarProducto(idProducto))
+        End Function
+
+        <HttpPost>
+        <AllowAnonymous>
+        Public Async Function ActualizarInventario(datosLogin As ProductoInventario) As Task(Of ActionResult)
+
+
+            If datosLogin.actualizarProducto(datosLogin) Then
+
+                Return RedirectToAction("Inventario", "Administrador")
+
+
+            Else
+                Return RedirectToAction("Inventario", "Administrador")
+
+            End If
+        End Function
+        <HttpPost>
+        <AllowAnonymous>
+        Public Async Function ActualizarProducto(datosLogin As ProductoInventario) As Task(Of ActionResult)
+
+
+            If datosLogin.actualizarProducto(datosLogin) Then
+
+                Return RedirectToAction("ListaProducto", "Administrador")
+
+
+            Else
+                Return RedirectToAction("ListaProducto", "Administrador")
+
+            End If
+        End Function
+
+        Public Async Function EliminarProducto(datosformulario As ProductoInventario) As Task(Of ActionResult)
+            Dim instantaciaProveedor = New ProductoInventario()
+
+            If instantaciaProveedor.EliminarProducto(datosformulario) = True Then
+                Return RedirectToAction("ListaProducto", "Administrador")
+                ViewBag.Message = "Eliminado"
+            Else
+                Return View(datosformulario)
+            End If
+
+        End Function
+
+
+        Function Inventario() As ActionResult
+            Dim instantaciaProducto = New ProductoInventario()
+
+            Return View(instantaciaProducto.listarProductos)
         End Function
         Function ListaProveedor() As ActionResult
             Return View()
         End Function
         Function InsertarProveedor() As ActionResult
+            Dim instantaciaProveedor = New ProveedorInventario()
+
+            Return View(instantaciaProveedor.listarProveedores)
 
 
-            Return View()
         End Function
+        Function EditarProveedor(idProveedor As String) As ActionResult
+            Dim instantaciaProveedor = New ProveedorInventario()
+
+            Return View(instantaciaProveedor.editarProveedor(idProveedor))
+        End Function
+
+        <HttpPost>
+        <AllowAnonymous>
+        Public Async Function ActualizarProveedor(datosLogin As ProveedorInventario) As Task(Of ActionResult)
+
+
+            If datosLogin.actualizarProveedor(datosLogin) Then
+
+                Return RedirectToAction("InsertarProveedor", "Administrador")
+
+
+            Else
+                Return RedirectToAction("InsertarProveedor", "Administrador")
+
+            End If
+        End Function
+
+        Public Async Function EliminarProveedor(datosformulario As ProveedorInventario) As Task(Of ActionResult)
+            Dim instantaciaProveedor = New ProveedorInventario()
+
+            If instantaciaProveedor.EliminarProveedor(datosformulario) = True Then
+                Return RedirectToAction("InsertarProveedor", "Administrador")
+                ViewBag.Message = "Eliminado"
+            Else
+                Return View(datosformulario)
+            End If
+
+        End Function
+
+
         <HttpPost>
         <AllowAnonymous>
         Public Async Function Proveedor(datos As ProveedorInventario) As Task(Of ActionResult)
@@ -95,5 +201,9 @@ Namespace Controllers
 
             End If
         End Function
+
+
+
+
     End Class
 End Namespace

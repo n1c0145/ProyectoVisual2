@@ -8,7 +8,22 @@ Imports System.Web.Routing
 Public Module RouteConfig
     Public Sub RegisterRoutes(ByVal routes As RouteCollection)
         routes.IgnoreRoute("{resource}.axd/{*pathInfo}")
+        routes.MapRoute(
+            name:="Editar-Inventario",
+            url:="Administrador/EditarInventario/{idProducto}",
+            defaults:=New With {.controller = "Administrador", .action = "EditarInventario", .idProducto = UrlParameter.Optional}
+        )
+        routes.MapRoute(
+            name:="Eliminar-Proveedor",
+            url:="Administrador/EliminarProveedor/{idProveedor}",
+            defaults:=New With {.controller = "Administrador", .action = "EliminarProveedor", .idProveedor = UrlParameter.Optional}
+        )
 
+        routes.MapRoute(
+            name:="Editar-Proveedor",
+            url:="Administrador/EditarProveedor/{idProveedor}",
+            defaults:=New With {.controller = "Administrador", .action = "EditarProveedor", .idProveedor = UrlParameter.Optional}
+        )
         routes.MapRoute(
             name:="Eliminar-Usuario",
             url:="Administrador/EliminarUsuario/{idPersona}",
