@@ -10,6 +10,18 @@ Public Module RouteConfig
         routes.IgnoreRoute("{resource}.axd/{*pathInfo}")
 
         routes.MapRoute(
+            name:="Eliminar-Usuario",
+            url:="Administrador/EliminarUsuario/{idPersona}",
+            defaults:=New With {.controller = "Administrador", .action = "EliminarUsuario", .idPersona = UrlParameter.Optional}
+        )
+
+        routes.MapRoute(
+            name:="Editar-Usuario",
+            url:="Administrador/EditarUsuario/{idPersona}",
+            defaults:=New With {.controller = "Administrador", .action = "EditarUsuario", .idPersona = UrlParameter.Optional}
+        )
+
+        routes.MapRoute(
             name:="Inicio-Usuario",
             url:="Usuario/InicioUsuario/{id}",
             defaults:=New With {.controller = "Usuario", .action = "InicioUsuario", .id = UrlParameter.Optional}

@@ -17,13 +17,14 @@ End Code
             @Html.PasswordFor(Function(model) model.contrasenia, New With {.class = "form-control"})
             @Html.ValidationMessageFor(Function(model) model.contrasenia)
         </div>
-        @<div>
 
-    
-    </div>
-
-
+        @Code
+            If ViewBag.message <> "" Then
+                @<small>@ViewBag.Message</small>
+            End If
+        End Code
         @<input type="submit" value="Ingreso" class="btn btn-block btn-danger" />
-    End Using
+
+            End Using
 
 </div>

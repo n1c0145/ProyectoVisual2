@@ -163,7 +163,14 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DataClasses1.dbml</DependentUpon>
     </Compile>
+    <Compile Include="Models\DataClasses2.designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataClasses2.dbml</DependentUpon>
+    </Compile>
     <Compile Include="Models\Login.vb" />
+    <Compile Include="Models\ProductoInventario.vb" />
+    <Compile Include="Models\ProveedorInventario.vb" />
     <Compile Include="Models\RegistroPersona.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
@@ -211,6 +218,14 @@
     <None Include="Models\DataClasses1.dbml.layout">
       <DependentUpon>DataClasses1.dbml</DependentUpon>
     </None>
+    <Content Include="Models\DataClasses2.dbml">
+      <Generator>MSLinqToSQLGenerator</Generator>
+      <LastGenOutput>DataClasses2.designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+    </Content>
+    <None Include="Models\DataClasses2.dbml.layout">
+      <DependentUpon>DataClasses2.dbml</DependentUpon>
+    </None>
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
@@ -234,6 +249,12 @@
     <Content Include="Views\Usuario\InicioUsuario.vbhtml" />
     <Content Include="Views\Administrador\InicioAdministrador.vbhtml" />
     <Content Include="Views\Administrador\ListaUsuarios.vbhtml" />
+    <Content Include="Views\Administrador\Inventario.vbhtml" />
+    <Content Include="Views\Administrador\ListaProveedor.vbhtml" />
+    <Content Include="Views\Administrador\EditarUsuario.vbhtml" />
+    <Content Include="Views\Administrador\ListaProducto.vbhtml" />
+    <Content Include="Views\Administrador\InsertarProducto.vbhtml" />
+    <Content Include="Views\Administrador\InsertarProveedor.vbhtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="favicon.ico" />

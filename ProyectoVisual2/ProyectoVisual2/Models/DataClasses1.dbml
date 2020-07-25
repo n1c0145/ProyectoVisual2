@@ -1,5 +1,22 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="inventariovisual" Class="DataClasses1DataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
   <Connection Mode="WebSettings" ConnectionString="Data Source=LAPTOP-T7GP67UJ\MSSQLSERVER09;Initial Catalog=inventariovisual;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="inventariovisualConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.UsuarioLogin" Member="UsuarioLogin">
+    <Type Name="UsuarioLogin">
+      <Column Name="IdLogin" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="usuario" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="contrasenia" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="IdTipoUsuario" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="UsuarioLogin_Registro" Member="Registro" ThisKey="IdLogin" OtherKey="IdLogin" Type="Registro" />
+      <Association Name="tipoUsuario_UsuarioLogin" Member="tipoUsuario" ThisKey="IdTipoUsuario" OtherKey="IdTipoUsuario" Type="tipoUsuario" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tipoUsuario" Member="tipoUsuario">
+    <Type Name="tipoUsuario">
+      <Column Name="IdTipoUsuario" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Tipo" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Association Name="tipoUsuario_UsuarioLogin" Member="UsuarioLogin" ThisKey="IdTipoUsuario" OtherKey="IdTipoUsuario" Type="UsuarioLogin" />
+    </Type>
+  </Table>
   <Table Name="dbo.Registro" Member="Registro">
     <Type Name="Registro">
       <Column Name="IdPersona" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -10,15 +27,6 @@
       <Column Name="telefono" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="IdLogin" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Association Name="UsuarioLogin_Registro" Member="UsuarioLogin" ThisKey="IdLogin" OtherKey="IdLogin" Type="UsuarioLogin" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.UsuarioLogin" Member="UsuarioLogin">
-    <Type Name="UsuarioLogin">
-      <Column Name="IdLogin" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="usuario" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
-      <Column Name="contrasenia" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
-      <Column Name="tipousuario" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
-      <Association Name="UsuarioLogin_Registro" Member="Registro" ThisKey="IdLogin" OtherKey="IdLogin" Type="Registro" />
     </Type>
   </Table>
 </Database>

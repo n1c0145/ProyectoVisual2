@@ -7,10 +7,8 @@ Public Class Login
     <Display(Name:="Usuario")>
     Public Property usuario As String
     <Required(ErrorMessage:="Este campo es requerido")>
-    <Display(Name:="Usuario")>
-    Public Property contrasenia As String
-    <Required(ErrorMessage:="Este campo es requerido")>
     <Display(Name:="Contraseña")>
+    Public Property contrasenia As String
     Public Property tipousuario As String
     <Display(Name:="Tipo de Usuario")>
     Dim tabla As New DataClasses1DataContext
@@ -25,7 +23,7 @@ Public Class Login
 
 
 
-        If consulta.Count() > 0 Then
+        If consulta.Count() & consulta2.Count() > 0 Then
             If consulta2.Count() > 0 Then
                 Return True
             End If
