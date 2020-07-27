@@ -52,7 +52,7 @@ Partial Public Class DataClasses1DataContext
   #End Region
 	
 	Public Sub New()
-		MyBase.New(Global.System.Configuration.ConfigurationManager.ConnectionStrings("inventariovisualConnectionString").ConnectionString, mappingSource)
+		MyBase.New(Global.System.Configuration.ConfigurationManager.ConnectionStrings("inventariovisualConnectionString1").ConnectionString, mappingSource)
 		OnCreated
 	End Sub
 	

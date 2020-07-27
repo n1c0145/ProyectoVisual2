@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="inventariovisual" Class="DataClasses1DataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="WebSettings" ConnectionString="Data Source=LAPTOP-T7GP67UJ\MSSQLSERVER09;Initial Catalog=inventariovisual;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="inventariovisualConnectionString" Provider="System.Data.SqlClient" />
+  <Connection Mode="WebSettings" ConnectionString="Data Source=LAPTOP-QDRTM434;Initial Catalog=inventariovisual;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="inventariovisualConnectionString1" Provider="System.Data.SqlClient" />
   <Table Name="dbo.UsuarioLogin" Member="UsuarioLogin">
     <Type Name="UsuarioLogin">
       <Column Name="IdLogin" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />

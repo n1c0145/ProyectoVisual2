@@ -31,6 +31,12 @@ Partial Public Class DataClasses2DataContext
   #Region "Definiciones de métodos de extensibilidad"
   Partial Private Sub OnCreated()
   End Sub
+  Partial Private Sub InsertCategoria(instance As Categoria)
+    End Sub
+  Partial Private Sub UpdateCategoria(instance As Categoria)
+    End Sub
+  Partial Private Sub DeleteCategoria(instance As Categoria)
+    End Sub
   Partial Private Sub InsertProducto(instance As Producto)
     End Sub
   Partial Private Sub UpdateProducto(instance As Producto)
@@ -43,16 +49,10 @@ Partial Public Class DataClasses2DataContext
     End Sub
   Partial Private Sub DeleteProveedor(instance As Proveedor)
     End Sub
-  Partial Private Sub InsertCategoria(instance As Categoria)
-    End Sub
-  Partial Private Sub UpdateCategoria(instance As Categoria)
-    End Sub
-  Partial Private Sub DeleteCategoria(instance As Categoria)
-    End Sub
   #End Region
 	
 	Public Sub New()
-		MyBase.New(Global.System.Configuration.ConfigurationManager.ConnectionStrings("inventariovisualConnectionString").ConnectionString, mappingSource)
+		MyBase.New(Global.System.Configuration.ConfigurationManager.ConnectionStrings("inventariovisualConnectionString1").ConnectionString, mappingSource)
 		OnCreated
 	End Sub
 	
@@ -76,6 +76,12 @@ Partial Public Class DataClasses2DataContext
 		OnCreated
 	End Sub
 	
+	Public ReadOnly Property Categoria() As System.Data.Linq.Table(Of Categoria)
+		Get
+			Return Me.GetTable(Of Categoria)
+		End Get
+	End Property
+	
 	Public ReadOnly Property Producto() As System.Data.Linq.Table(Of Producto)
 		Get
 			Return Me.GetTable(Of Producto)
@@ -87,12 +93,113 @@ Partial Public Class DataClasses2DataContext
 			Return Me.GetTable(Of Proveedor)
 		End Get
 	End Property
+End Class
+
+<Global.System.Data.Linq.Mapping.TableAttribute(Name:="dbo.Categoria")>  _
+Partial Public Class Categoria
+	Implements System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
 	
-	Public ReadOnly Property Categoria() As System.Data.Linq.Table(Of Categoria)
+	Private Shared emptyChangingEventArgs As PropertyChangingEventArgs = New PropertyChangingEventArgs(String.Empty)
+	
+	Private _IdCategoria As Integer
+	
+	Private _categoria As String
+	
+	Private _Producto As EntitySet(Of Producto)
+	
+    #Region "Definiciones de métodos de extensibilidad"
+    Partial Private Sub OnLoaded()
+    End Sub
+    Partial Private Sub OnValidate(action As System.Data.Linq.ChangeAction)
+    End Sub
+    Partial Private Sub OnCreated()
+    End Sub
+    Partial Private Sub OnIdCategoriaChanging(value As Integer)
+    End Sub
+    Partial Private Sub OnIdCategoriaChanged()
+    End Sub
+    Partial Private Sub OncategoriaChanging(value As String)
+    End Sub
+    Partial Private Sub OncategoriaChanged()
+    End Sub
+    #End Region
+	
+	Public Sub New()
+		MyBase.New
+		Me._Producto = New EntitySet(Of Producto)(AddressOf Me.attach_Producto, AddressOf Me.detach_Producto)
+		OnCreated
+	End Sub
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_IdCategoria", AutoSync:=AutoSync.OnInsert, DbType:="Int NOT NULL IDENTITY", IsPrimaryKey:=true, IsDbGenerated:=true)>  _
+	Public Property IdCategoria() As Integer
 		Get
-			Return Me.GetTable(Of Categoria)
+			Return Me._IdCategoria
 		End Get
+		Set
+			If ((Me._IdCategoria = value)  _
+						= false) Then
+				Me.OnIdCategoriaChanging(value)
+				Me.SendPropertyChanging
+				Me._IdCategoria = value
+				Me.SendPropertyChanged("IdCategoria")
+				Me.OnIdCategoriaChanged
+			End If
+		End Set
 	End Property
+	
+	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_categoria", DbType:="VarChar(255)")>  _
+	Public Property categoria() As String
+		Get
+			Return Me._categoria
+		End Get
+		Set
+			If (String.Equals(Me._categoria, value) = false) Then
+				Me.OncategoriaChanging(value)
+				Me.SendPropertyChanging
+				Me._categoria = value
+				Me.SendPropertyChanged("categoria")
+				Me.OncategoriaChanged
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.AssociationAttribute(Name:="Categoria_Producto", Storage:="_Producto", ThisKey:="IdCategoria", OtherKey:="IdCategoria")>  _
+	Public Property Producto() As EntitySet(Of Producto)
+		Get
+			Return Me._Producto
+		End Get
+		Set
+			Me._Producto.Assign(value)
+		End Set
+	End Property
+	
+	Public Event PropertyChanging As PropertyChangingEventHandler Implements System.ComponentModel.INotifyPropertyChanging.PropertyChanging
+	
+	Public Event PropertyChanged As PropertyChangedEventHandler Implements System.ComponentModel.INotifyPropertyChanged.PropertyChanged
+	
+	Protected Overridable Sub SendPropertyChanging()
+		If ((Me.PropertyChangingEvent Is Nothing)  _
+					= false) Then
+			RaiseEvent PropertyChanging(Me, emptyChangingEventArgs)
+		End If
+	End Sub
+	
+	Protected Overridable Sub SendPropertyChanged(ByVal propertyName As [String])
+		If ((Me.PropertyChangedEvent Is Nothing)  _
+					= false) Then
+			RaiseEvent PropertyChanged(Me, New PropertyChangedEventArgs(propertyName))
+		End If
+	End Sub
+	
+	Private Sub attach_Producto(ByVal entity As Producto)
+		Me.SendPropertyChanging
+		entity.Categoria1 = Me
+	End Sub
+	
+	Private Sub detach_Producto(ByVal entity As Producto)
+		Me.SendPropertyChanging
+		entity.Categoria1 = Nothing
+	End Sub
 End Class
 
 <Global.System.Data.Linq.Mapping.TableAttribute(Name:="dbo.Producto")>  _
@@ -117,9 +224,9 @@ Partial Public Class Producto
 	
 	Private _IdCategoria As System.Nullable(Of Integer)
 	
-	Private _Proveedor As EntityRef(Of Proveedor)
-	
 	Private _Categoria1 As EntityRef(Of Categoria)
+	
+	Private _Proveedor As EntityRef(Of Proveedor)
 	
     #Region "Definiciones de métodos de extensibilidad"
     Partial Private Sub OnLoaded()
@@ -164,8 +271,8 @@ Partial Public Class Producto
 	
 	Public Sub New()
 		MyBase.New
-		Me._Proveedor = CType(Nothing, EntityRef(Of Proveedor))
 		Me._Categoria1 = CType(Nothing, EntityRef(Of Categoria))
+		Me._Proveedor = CType(Nothing, EntityRef(Of Proveedor))
 		OnCreated
 	End Sub
 	
@@ -304,34 +411,6 @@ Partial Public Class Producto
 		End Set
 	End Property
 	
-	<Global.System.Data.Linq.Mapping.AssociationAttribute(Name:="Proveedor_Producto", Storage:="_Proveedor", ThisKey:="IdProveedor", OtherKey:="IdProveedor", IsForeignKey:=true)>  _
-	Public Property Proveedor() As Proveedor
-		Get
-			Return Me._Proveedor.Entity
-		End Get
-		Set
-			Dim previousValue As Proveedor = Me._Proveedor.Entity
-			If ((Object.Equals(previousValue, value) = false)  _
-						OrElse (Me._Proveedor.HasLoadedOrAssignedValue = false)) Then
-				Me.SendPropertyChanging
-				If ((previousValue Is Nothing)  _
-							= false) Then
-					Me._Proveedor.Entity = Nothing
-					previousValue.Producto.Remove(Me)
-				End If
-				Me._Proveedor.Entity = value
-				If ((value Is Nothing)  _
-							= false) Then
-					value.Producto.Add(Me)
-					Me._IdProveedor = value.IdProveedor
-				Else
-					Me._IdProveedor = CType(Nothing, Nullable(Of Integer))
-				End If
-				Me.SendPropertyChanged("Proveedor")
-			End If
-		End Set
-	End Property
-	
 	<Global.System.Data.Linq.Mapping.AssociationAttribute(Name:="Categoria_Producto", Storage:="_Categoria1", ThisKey:="IdCategoria", OtherKey:="IdCategoria", IsForeignKey:=true)>  _
 	Public Property Categoria1() As Categoria
 		Get
@@ -356,6 +435,34 @@ Partial Public Class Producto
 					Me._IdCategoria = CType(Nothing, Nullable(Of Integer))
 				End If
 				Me.SendPropertyChanged("Categoria1")
+			End If
+		End Set
+	End Property
+	
+	<Global.System.Data.Linq.Mapping.AssociationAttribute(Name:="Proveedor_Producto", Storage:="_Proveedor", ThisKey:="IdProveedor", OtherKey:="IdProveedor", IsForeignKey:=true)>  _
+	Public Property Proveedor() As Proveedor
+		Get
+			Return Me._Proveedor.Entity
+		End Get
+		Set
+			Dim previousValue As Proveedor = Me._Proveedor.Entity
+			If ((Object.Equals(previousValue, value) = false)  _
+						OrElse (Me._Proveedor.HasLoadedOrAssignedValue = false)) Then
+				Me.SendPropertyChanging
+				If ((previousValue Is Nothing)  _
+							= false) Then
+					Me._Proveedor.Entity = Nothing
+					previousValue.Producto.Remove(Me)
+				End If
+				Me._Proveedor.Entity = value
+				If ((value Is Nothing)  _
+							= false) Then
+					value.Producto.Add(Me)
+					Me._IdProveedor = value.IdProveedor
+				Else
+					Me._IdProveedor = CType(Nothing, Nullable(Of Integer))
+				End If
+				Me.SendPropertyChanged("Proveedor")
 			End If
 		End Set
 	End Property
@@ -549,112 +656,5 @@ Partial Public Class Proveedor
 	Private Sub detach_Producto(ByVal entity As Producto)
 		Me.SendPropertyChanging
 		entity.Proveedor = Nothing
-	End Sub
-End Class
-
-<Global.System.Data.Linq.Mapping.TableAttribute(Name:="dbo.Categoria")>  _
-Partial Public Class Categoria
-	Implements System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
-	
-	Private Shared emptyChangingEventArgs As PropertyChangingEventArgs = New PropertyChangingEventArgs(String.Empty)
-	
-	Private _IdCategoria As Integer
-	
-	Private _categoria As String
-	
-	Private _Producto As EntitySet(Of Producto)
-	
-    #Region "Definiciones de métodos de extensibilidad"
-    Partial Private Sub OnLoaded()
-    End Sub
-    Partial Private Sub OnValidate(action As System.Data.Linq.ChangeAction)
-    End Sub
-    Partial Private Sub OnCreated()
-    End Sub
-    Partial Private Sub OnIdCategoriaChanging(value As Integer)
-    End Sub
-    Partial Private Sub OnIdCategoriaChanged()
-    End Sub
-    Partial Private Sub OncategoriaChanging(value As String)
-    End Sub
-    Partial Private Sub OncategoriaChanged()
-    End Sub
-    #End Region
-	
-	Public Sub New()
-		MyBase.New
-		Me._Producto = New EntitySet(Of Producto)(AddressOf Me.attach_Producto, AddressOf Me.detach_Producto)
-		OnCreated
-	End Sub
-	
-	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_IdCategoria", AutoSync:=AutoSync.OnInsert, DbType:="Int NOT NULL IDENTITY", IsPrimaryKey:=true, IsDbGenerated:=true)>  _
-	Public Property IdCategoria() As Integer
-		Get
-			Return Me._IdCategoria
-		End Get
-		Set
-			If ((Me._IdCategoria = value)  _
-						= false) Then
-				Me.OnIdCategoriaChanging(value)
-				Me.SendPropertyChanging
-				Me._IdCategoria = value
-				Me.SendPropertyChanged("IdCategoria")
-				Me.OnIdCategoriaChanged
-			End If
-		End Set
-	End Property
-	
-	<Global.System.Data.Linq.Mapping.ColumnAttribute(Storage:="_categoria", DbType:="VarChar(255)")>  _
-	Public Property categoria() As String
-		Get
-			Return Me._categoria
-		End Get
-		Set
-			If (String.Equals(Me._categoria, value) = false) Then
-				Me.OncategoriaChanging(value)
-				Me.SendPropertyChanging
-				Me._categoria = value
-				Me.SendPropertyChanged("categoria")
-				Me.OncategoriaChanged
-			End If
-		End Set
-	End Property
-	
-	<Global.System.Data.Linq.Mapping.AssociationAttribute(Name:="Categoria_Producto", Storage:="_Producto", ThisKey:="IdCategoria", OtherKey:="IdCategoria")>  _
-	Public Property Producto() As EntitySet(Of Producto)
-		Get
-			Return Me._Producto
-		End Get
-		Set
-			Me._Producto.Assign(value)
-		End Set
-	End Property
-	
-	Public Event PropertyChanging As PropertyChangingEventHandler Implements System.ComponentModel.INotifyPropertyChanging.PropertyChanging
-	
-	Public Event PropertyChanged As PropertyChangedEventHandler Implements System.ComponentModel.INotifyPropertyChanged.PropertyChanged
-	
-	Protected Overridable Sub SendPropertyChanging()
-		If ((Me.PropertyChangingEvent Is Nothing)  _
-					= false) Then
-			RaiseEvent PropertyChanging(Me, emptyChangingEventArgs)
-		End If
-	End Sub
-	
-	Protected Overridable Sub SendPropertyChanged(ByVal propertyName As [String])
-		If ((Me.PropertyChangedEvent Is Nothing)  _
-					= false) Then
-			RaiseEvent PropertyChanged(Me, New PropertyChangedEventArgs(propertyName))
-		End If
-	End Sub
-	
-	Private Sub attach_Producto(ByVal entity As Producto)
-		Me.SendPropertyChanging
-		entity.Categoria1 = Me
-	End Sub
-	
-	Private Sub detach_Producto(ByVal entity As Producto)
-		Me.SendPropertyChanging
-		entity.Categoria1 = Nothing
 	End Sub
 End Class
